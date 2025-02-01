@@ -194,7 +194,6 @@ void check_buttons() {
             if(!gpio_get(BTN_A_PIN)) {  
                 current_number = (current_number + 1) % 10;
                 update_display();
-                printf("A: %d\n", current_number);
                 btn_a_state = BTN_PRESSED;
             } else {
                 btn_a_state = BTN_RELEASED;
@@ -208,7 +207,6 @@ void check_buttons() {
             if(!gpio_get(BTN_B_PIN)) {  
                 current_number = (current_number == 0) ? 9 : current_number - 1;
                 update_display();
-                printf("B: %d\n", current_number);
                 btn_b_state = BTN_PRESSED;
             } else {
                 btn_b_state = BTN_RELEASED;
