@@ -73,7 +73,7 @@ const bool number_patterns[10][25] = {
     {
         0,1,1,1,1,  
         1,0,0,0,0,  
-        0,0,1,1,1,  
+        0,1,1,1,1,  
         0,0,0,1,0,  
         0,1,1,1,1   
     },
@@ -225,7 +225,7 @@ void check_buttons() {
     }
 }
 
-// Função para o blink do LED RGB
+// Função para o blink do LED RGB COM PINO 13 (VERMELHO)
 void blink_led() {
     static absolute_time_t last_blink_time = {0};
     absolute_time_t now = get_absolute_time();
