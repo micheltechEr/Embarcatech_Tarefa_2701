@@ -13,99 +13,101 @@
 #define NUM_LEDS 25
 #define DEBOUNCE_MS 50  
 
-// Mapeamento físico da matriz 5x5 , seguindo a forma sequencial
+// Pinos do LED RGB
+#define LED_R_PIN 13 // Pino vermelho
+#define LED_G_PIN 11 // Pino verde
+#define LED_B_PIN 12 // Pino azul
 
+// Mapeamento físico da matriz 5x5 , seguindo a forma sequencial
 const uint8_t led_map[NUM_LEDS] = {
-    20, 21, 22, 23, 24,  // Linha 1 (Superior)
-    15, 16, 17, 18, 19,  // Linha 2
-    10, 11, 12, 13, 14,  // Linha 3
-     5,  6,  7,  8,  9,  // Linha 4
-     0,  1,  2,  3,  4   // Linha 5 (Inferior)
+    20, 21, 22, 23, 24,    // (Superior)
+    15, 16, 17, 18, 19,   
+    10, 11, 12, 13, 14,   
+     5,  6,  7,  8,  9,   
+     0,  1,  2,  3,  4     // (Inferior)
 };
 
 // Padrões dos números (0-9)
 const bool number_patterns[10][25] = {
-
-    //Número 0
+    // Número 0
     {
-        1,1,1,1,1,  // Linha 1 
-        1,0,0,0,1,  // Linha 2
-        1,0,0,0,1,  // Linha 3
-        1,0,0,0,1,  // Linha 4
-        1,1,1,1,1   // Linha 5
+        1,1,1,1,1,   
+        1,0,0,0,1,  
+        1,0,0,0,1,  
+        1,0,0,0,1,  
+        1,1,1,1,1   
     },
     // Número 1 
     {
-        0,0,1,0,0,  // Linha 1
-        0,1,1,0,0,  // Linha 2
-        0,0,1,0,0,  // Linha 3
-        0,0,1,0,0,  // Linha 4
-        0,1,1,1,0   // Linha 5
+        0,0,1,0,0,  
+        0,1,1,0,0,  
+        0,0,1,0,0,  
+        0,0,1,0,0,  
+        0,1,1,1,0   
     },
     // Número 2
     {
-        0,1,1,0,0,  // Linha 1
-        0,1,0,1,0,  // Linha 2
-        0,1,0,0,0,  // Linha 3
-        0,0,1,0,0,  // Linha 4
-        1,1,1,1,0   // Linha 5
+        0,1,1,0,0,  
+        0,1,0,1,0,  
+        0,1,0,0,0,  
+        0,0,1,0,0,  
+        1,1,1,1,0   
     },
     // Número 3 
-     {
-        1,1,1,1,1,  // Linha 1
-        0,0,0,0,1,  // Linha 2
-        1,1,1,1,1,  // Linha 3
-        0,0,0,0,1,  // Linha 4
-        1,1,1,1,1   // Linha 5
+    {
+        1,1,1,1,1,  
+        0,0,0,0,1,  
+        1,1,1,1,1,  
+        0,0,0,0,1,  
+        1,1,1,1,1   
     },
-
     // Número 4 
     {
-        1,0,0,0,1,  // Linha 1
-        1,0,0,0,1,  // Linha 2
-        1,1,1,1,1,  // Linha 3
-        0,0,0,0,1,  // Linha 4
-        1,0,0,0,0   // Linha 5
+        1,0,0,0,1,  
+        1,0,0,0,1,  
+        1,1,1,1,1,  
+        0,0,0,0,1,  
+        1,0,0,0,0   
     },
     // Número 5
     {
-  /*24*/0,1,1,1,1,  // Linha 1: Linha horizontal completa no topo
-/* 19*/ 1,0,0,0,0,  // Linha 2: Linha vertical à esquerda
-/*14 */ 0,0,1,1,1,  // Linha 3: Linha horizontal no meio
-        0,0,0,1,0,  // Linha 4: Linha vertical à direita
-        0,1,1,1,1   // Linha 5: Linha horizontal completa na parte inferior
+        0,1,1,1,1,  
+        1,0,0,0,0,  
+        0,0,1,1,1,  
+        0,0,0,1,0,  
+        0,1,1,1,1   
     },
-      // Número 6 
+    // Número 6 
     {
-        1,1,1,1,1,  // Linha 1
-        1,0,0,0,0,  // Linha 2
-        1,1,1,1,1,  // Linha 3
-        1,0,0,0,1,  // Linha 4
-        1,1,1,1,1   // Linha 5
+        1,1,1,1,1,  
+        1,0,0,0,0,  
+        1,1,1,1,1,  
+        1,0,0,0,1,  
+        1,1,1,1,1   
     },
     // Número 7 
     {
-        1,1,1,1,1,  // Linha 1
-        0,0,0,1,0,  // Linha 2
-        0,0,1,0,0,  // Linha 3
-        0,1,0,0,0,  // Linha 4
-        0,0,0,0,1   // Linha 5
+        1,1,1,1,1,  
+        0,0,0,1,0,  
+        0,0,1,0,0,   
+        0,1,0,0,0,   
+        0,0,0,0,1    
     },
     // Número 8 
     {
-        1,1,1,1,1,  // Linha 1
-        1,0,0,0,1,  // Linha 2
-        1,1,1,1,1,  // Linha 3
-        1,0,0,0,1,  // Linha 4
-        1,1,1,1,1   // Linha 5
+        1,1,1,1,1,   
+        1,0,0,0,1,   
+        1,1,1,1,1,   
+        1,0,0,0,1,   
+        1,1,1,1,1    
     },
     // Número 9 
     {
-        1,1,1,1,1,  // Linha 1
-        1,0,0,0,1,  // Linha 2
-        1,1,1,1,1,  // Linha 3
-        0,0,0,0,1,  // Linha 4
-        1,1,1,1,1   // Linha 5
+        1,1,1,1,1,   
+        1,0,0,0,1,   
+        1,1,1,1,1,   
+        0,0,0,0,1,   
+        1,1,1,1,1    
     }
 };
 
@@ -116,12 +118,26 @@ volatile ButtonState btn_b_state = BTN_RELEASED;
 volatile uint8_t current_number = 0;
 volatile absolute_time_t last_a_time, last_b_time;
 
+// Variáveis para o blink do LED RGB
+volatile bool blink_state = false;
+volatile bool blink_active = true;
 
 void ws2812_init(PIO pio, uint sm, uint pin);
 void put_pixel(uint32_t color);
 void update_display();
 void debounce_handler(uint gpio, uint32_t events);
 void check_buttons();
+void blink_led();
+
+
+uint32_t rgb_to_rbg(uint32_t rgb_color) {
+    uint8_t red = (rgb_color >> 16) & 0xFF;   // Extrai o componente vermelho (R)
+    uint8_t green = (rgb_color >> 8) & 0xFF;  // Extrai o componente verde (G)
+    uint8_t blue = rgb_color & 0xFF;          // Extrai o componente azul (B)
+
+    // Reorganiza os componentes para RBG
+    return (red << 16) | (blue << 8) | green;
+}
 
 // Inicialização do PIO para a matriz de LED 
 void ws2812_init(PIO pio, uint sm, uint pin) {
@@ -130,7 +146,9 @@ void ws2812_init(PIO pio, uint sm, uint pin) {
 }
 
 void put_pixel(uint32_t color) {
-    pio_sm_put_blocking(pio0, 0, color << 8u);  
+    // Converte o valor RGB para RBG antes de enviar ao LED
+    uint32_t rbg_color = rgb_to_rbg(color);
+    pio_sm_put_blocking(pio0, 0, rbg_color << 8u);
 }
 
 // Atualização da matriz de LED
@@ -198,7 +216,28 @@ void check_buttons() {
     }
 }
 
-// Função setup para incializações e configurações
+// Função para o blink do LED RGB
+void blink_led() {
+    static absolute_time_t last_blink_time = {0};
+    absolute_time_t now = get_absolute_time();
+
+    if(blink_active && absolute_time_diff_us(last_blink_time, now) > 100000) { // 100ms
+        blink_state = !blink_state; // Alterna o estado
+        last_blink_time = now;
+
+        if(blink_state) {
+            gpio_put(LED_R_PIN, 1); // Acende o LED RGB em vermelho
+            gpio_put(LED_G_PIN, 0); // Desliga o verde
+            gpio_put(LED_B_PIN, 0); // Desliga o azul
+        } else {
+            gpio_put(LED_R_PIN, 0); // Apaga o LED RGB
+            gpio_put(LED_G_PIN, 0); // Garante que o verde esteja apagado
+            gpio_put(LED_B_PIN, 0); // Garante que o azul esteja apagado
+        }
+    }
+}
+
+// Função setup para inicializações e configurações
 void setup() {
     stdio_init_all();
     
@@ -209,6 +248,14 @@ void setup() {
     gpio_init(BTN_B_PIN);
     gpio_set_dir(BTN_B_PIN, GPIO_IN);
     gpio_pull_up(BTN_B_PIN);
+
+    // Configuração dos pinos do LED RGB
+    gpio_init(LED_R_PIN);
+    gpio_init(LED_G_PIN);
+    gpio_init(LED_B_PIN);
+    gpio_set_dir(LED_R_PIN, GPIO_OUT);
+    gpio_set_dir(LED_G_PIN, GPIO_OUT);
+    gpio_set_dir(LED_B_PIN, GPIO_OUT);
 
     // Configuração de interrupções
     gpio_set_irq_enabled(BTN_A_PIN, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true);
@@ -222,14 +269,12 @@ void setup() {
 }
 
 // Função main para chamada da função setup, contém um loop que verifica o estado dos botões e uma função check_buttons
-//A função check_buttons usa debounce para evitar o bounce que foi experienciado durante a incrementação e decrementação
-
 int main() {
     setup();
 
-// Aqui falta ainda adicionar o blink do LED RGB
     while(1) {
         check_buttons();
+        blink_led();
         sleep_ms(10);
     }
 }
