@@ -45,7 +45,7 @@ const bool number_patterns[10][25] = {
     // Número 2
     {
         0,1,1,0,0,  // Linha 1
-        1,0,0,1,0,  // Linha 2
+        0,1,0,1,0,  // Linha 2
         0,1,0,0,0,  // Linha 3
         0,0,1,0,0,  // Linha 4
         1,1,1,1,0   // Linha 5
@@ -67,13 +67,13 @@ const bool number_patterns[10][25] = {
         0,0,0,0,1,  // Linha 4
         1,0,0,0,0   // Linha 5
     },
-      // Número 5
+    // Número 5
     {
-        1,1,1,1,1,  // Linha 1
-        1,0,0,0,0,  // Linha 2
-        1,1,1,0,0,  // Linha 3
-        0,0,0,1,0,  // Linha 4
-        1,1,1,1,1   // Linha 5
+  /*24*/0,1,1,1,1,  // Linha 1: Linha horizontal completa no topo
+/* 19*/ 1,0,0,0,0,  // Linha 2: Linha vertical à esquerda
+/*14 */ 0,0,1,1,1,  // Linha 3: Linha horizontal no meio
+        0,0,0,1,0,  // Linha 4: Linha vertical à direita
+        0,1,1,1,1   // Linha 5: Linha horizontal completa na parte inferior
     },
       // Número 6 
     {
@@ -89,7 +89,7 @@ const bool number_patterns[10][25] = {
         0,0,0,1,0,  // Linha 2
         0,0,1,0,0,  // Linha 3
         0,1,0,0,0,  // Linha 4
-        1,0,0,0,0   // Linha 5
+        0,0,0,0,1   // Linha 5
     },
     // Número 8 
     {
