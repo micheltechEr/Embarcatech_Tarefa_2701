@@ -146,16 +146,25 @@ void ws2812_init(PIO pio, uint sm, uint pin) {
 }
 
 void put_pixel(uint32_t color) {
-    // Converte o valor RGB para RBG antes de enviar ao LED
-    uint32_t rbg_color = rgb_to_rbg(color);
-    pio_sm_put_blocking(pio0, 0, rbg_color << 8u);
+    // Extrai os componentes RGB
+    uint8_t red = (color >> 16) & 0xFF;   // Componente vermelho (R)
+    uint8_t green = (color >> 8) & 0xFF;  // Componente verde (G)
+    uint8_t blue = color & 0xFF;          // Componente azul (B)
+
+    // Reorganiza os componentes para o formato GRB (Green-Red-Blue)
+    uint32_t grb_color = (green << 16) | (red << 8) | blue;
+
+    // Envia o pixel no formato GRB
+    pio_sm_put_blocking(pio0, 0, grb_color << 8u);
 }
 
 // Atualização da matriz de LED
 void update_display() {
-    for(int i = 0; i < NUM_LEDS; i++) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         uint8_t pos = led_map[i];
-        put_pixel(number_patterns[current_number][pos] ? 0x00FF00 : 0x000000);
+        // Define a cor do pixel com base no padrão do número atual
+        uint32_t color = number_patterns[current_number][pos] ? 0x00FF00 : 0x000000;
+        put_pixel(color); // Envia o pixel diretamente no formato RGB
     }
 }
 
